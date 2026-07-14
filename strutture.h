@@ -52,3 +52,5 @@ void inserisciUtente(ListaUtenti* lista, Utente* nuovoUtente);
 Utente* cercaUtentePerUsername(ListaUtenti lista, const char* username);
 Utente* cercaUtentePerCodice(ListaUtenti lista, const char* codiceCliente);
 bool eliminaUtente(ListaUtenti* lista, const char* username);
+
+void inizializzaCoda(CodaSpedizioni *coda);
