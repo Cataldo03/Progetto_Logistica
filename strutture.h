@@ -54,3 +54,8 @@ Utente* cercaUtentePerCodice(ListaUtenti lista, const char* codiceCliente);
 bool eliminaUtente(ListaUtenti* lista, const char* username);
 
 void inizializzaCoda(CodaSpedizioni *coda);
+void enqueueSpedizione(CodaSpedizioni *coda, const char* mittente, const char* codiceDest, double costo, const char* track);
+NodoCodaSpedizione* dequeueSpedizione(CodaSpedizioni *coda);
+void aggiungiSpedizione(Utente* u, Data d, const char* tipo, const char* destinatario, double costo, const char* track);
+
+#endif
