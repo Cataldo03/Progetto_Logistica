@@ -75,3 +75,41 @@ void inizializzaCoda(CodaSpedizioni *coda) {
     coda->front = NULL;
     coda->rear = NULL;
 }
+void enqueueSpedizione(CodaSpedizioni *coda, const char* mittente, const char* codiceDest, double costo, const char* track) {
+    NodoCodaSpedizione* nuovo = (NodoCodaSpedizione*)malloc(sizeof(NodoCodaSpedizione));
+    if (nuovo == NULL) return;
+    strcpy(nuovo->usernameMittente, mittente);
+    strcpy(nuovo->codiceDestinatario, codiceDest);
+    strcpy(nuovo->tracking, track);
+    nuovo->costoSpedizione = costo;
+    nuovo->next = NULL;
+
+    if (coda->rear == NULL) {
+        coda->front = nuovo;
+        coda->rear = nuovo;
+    } else {
+        coda->rear->next = nuovo;
+        coda->rear = nuovo;
+    }
+}
+
+NodoCodaSpedizione* dequeueSpedizione(CodaSpedizioni *coda) {
+    if (coda->front == NULL) return NULL;
+    NodoCodaSpedizione* temp = coda->front;
+    coda->front = coda->front->next;
+    if (coda->front == NULL) coda->rear = NULL;
+    return temp;
+}
+
+void aggiungiSpedizione(Utente* u, Data d, const char* tipo, const char* destinatario, double costo, const char* track) {
+    Spedizione* nuova = (Spedizione*)malloc(sizeof(Spedizione));
+    if (nuova == NULL) return;
+    nuova->dataOperazione = d;
+    strcpy(nuova->tracking, track);
+    strcpy(nuova->tipoSpedizione, tipo);
+    strcpy(nuova->destinatario, destinatario);
+    nuova->costoSpedizione = costo;
+    nuova->next = u->storico;
+    u->storico = nuova;
+}
+
