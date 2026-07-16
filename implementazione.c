@@ -49,3 +49,26 @@ void elaboraCoda(ListaUtenti db, Data d, CodaSpedizioni* coda) {
     }
     printf("Tutti i pacchi sono stati smistati.\n");
 }
+void calcolaFatturatoTotale(ListaUtenti db) {
+    double totaleFatturato = 0.0;
+    int pacchiSpediti = 0;
+
+    Utente* currUtente = db;
+    while (currUtente != NULL) {
+        Spedizione* currSped = currUtente->storico;
+
+        while (currSped != NULL) {
+            if (strcmp(currSped->tipoSpedizione, "Inviato") == 0) {
+                totaleFatturato += currSped->costoSpedizione;
+                pacchiSpediti++;
+            }
+            currSped = currSped->next;
+        }
+        currUtente = currUtente->next;
+    }
+
+    printf("\n=== RESOCONTO AZIENDALE HUB LOGISTICO ===\n");
+    printf("Pacchi processati in totale: %d\n", pacchiSpediti);
+    printf("Fatturato Lordo Generato: %.2lf EUR\n", totaleFatturato);
+    printf("=========================================\n");
+}
