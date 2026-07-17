@@ -32,3 +32,33 @@ void ordinaStoricoPerCosto(Utente* u) {
         lptr = ptr1;
     }
 }
+void stampaStorico(Utente* u) {
+    Spedizione* s = u->storico;
+    if (s == NULL) {
+        printf("Nessun movimento trovato.\n");
+        return;
+    }
+    while (s != NULL) {
+        printf("[%02d/%02d/%04d] %-10s | %-10s | Verso: %-10s | %.2lf EUR\n",
+            s->dataOperazione.giorno, s->dataOperazione.mese, s->dataOperazione.anno,
+            s->tracking, s->tipoSpedizione, s->destinatario, s->costoSpedizione);
+        s = s->next;
+    }
+}
+
+void cercaPerTracking(Utente* u, const char* trackDaCercare) {
+    Spedizione* s = u->storico;
+    while (s != NULL) {
+        if (strcmp(s->tracking, trackDaCercare) == 0) {
+            printf("\n--- PACCO TROVATO ---\n");
+            printf("Data: %02d/%02d/%04d\n", s->dataOperazione.giorno, s->dataOperazione.mese, s->dataOperazione.anno);
+            printf("Stato: %s\n", s->tipoSpedizione);
+            printf("Destinazione: %s\n", s->destinatario);
+            printf("Costo: %.2lf EUR\n", s->costoSpedizione);
+            return;
+        }
+        s = s->next;
+    }
+    printf("\nNessun pacco trovato con il codice: %s\n", trackDaCercare);
+}
+
